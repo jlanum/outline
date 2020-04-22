@@ -31,19 +31,18 @@ const format =  async (output) => {
     const formated = {};
     
     for (var i = 0, len = output.length; i < len; i++) {
-        let jsonResult = JSON.parse(output[i].substring(9, output[i].length));
-        let formatted = `{"score":${output[i].substring(0,7)},"id":${jsonResult.id}}`;
+        let jsonResult = JSON.parse(output[i].substring(9, output[i].length)); //grab the score
+        let formatted = `{"score":${output[i].substring(0,7)},"id":${jsonResult.id}}`; //grab the json
         finalFormat.push(formatted);
     }
     
-    out(finalFormat);
+    out(finalFormat); //write to the data file
    
     return;
 };
 
 const init = async () => {
-    clean();
-    // const highest = await findHighest(limited);
+    clean(); //clean the old results
     await format(limited);
 }
 
