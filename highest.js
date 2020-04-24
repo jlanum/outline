@@ -7,7 +7,9 @@ spit out all lines if no issue
 */
 
 const fs = require('fs');
-const scoreList = require('fs').readFileSync('./scores.json', 'utf-8'); //Pull list of lines
+const limit = process.argv.slice(3)[0]; // grab limit from cmd line arg
+const file = process.argv.slice(2)[0]; // grab file from cmd line arg
+const scoreList = require('fs').readFileSync(`${file}`, 'utf-8'); //Pull list of lines
 const scoreLines = scoreList.toString().split("\n"); // split on the carriage return
 
 const scores = scoreLines.sort(function(x,y){
@@ -23,7 +25,7 @@ const clean = () => {
     return fs.writeFileSync('./data.json','');
 }; // clean file from previous run
 
-const limit = process.argv.slice(2); // grab limit from cmd line arg
+
 const limited = scores.slice(0,limit); // slice score
 
 const format =  async (output) => {
@@ -35,7 +37,7 @@ const format =  async (output) => {
         let formatted = `{"score":${output[i].substr(0,output[i].indexOf(':'))},"id":"${jsonResult.id}"}`; //grab the json
         finalFormat.push(formatted);
     }
-    
+    console.log(finalFormat);
     out(finalFormat); //write to the data file
    
     return;
