@@ -25,8 +25,8 @@ const clean = () => {
     return fs.writeFileSync('./data.json','');
 }; // clean file from previous run
 
-
-const limited = scores.slice(0,limit); // slice score
+const scores2 = scores;
+const limited = scores2.slice(0,limit); // slice score
 
 const format =  async (output) => {
     const finalFormat = [];
@@ -35,9 +35,11 @@ const format =  async (output) => {
     for (var i = 0, len = output.length; i < len; i++) {
         let jsonResult = JSON.parse(output[i].substring(output[i].indexOf('{'), output[i].length)); //grab the score
         let formatted = `{"score":${output[i].substr(0,output[i].indexOf(':'))},"id":"${jsonResult.id}"}`; //grab the json
-        finalFormat.push(formatted);
+        var jsonPretty = JSON.stringify(JSON.parse(formatted),null,2);  
+        finalFormat.push(jsonPretty);
     }
-    console.log(finalFormat);
+    
+
     out(finalFormat); //write to the data file
    
     return;
